@@ -30,7 +30,7 @@ function ProductDetail(){
         }
         fetchProduct();
     }, [id]);
-    
+    // Handle loading and error states
     if(loading) return <div className="text-center mt-20 text-xl">Loading Product Details...</div>
     if(error) return(
         <div className="text-center mt-20 border p-10 max-w-md mx-auto rounded-lg shadow-lg">
@@ -42,7 +42,7 @@ function ProductDetail(){
     if(!product) return null;
     return(
         <div className="max-w-6xl mx-auto p-6">
-      {/* Back Button for UX */}
+      {/* Back Button for UI */}
       <button 
         onClick={() => navigate(-1)} 
         className="flex items-center gap-2 text-gray-600 hover:text-blue-600 mb-6 transition-colors"
@@ -89,7 +89,7 @@ function ProductDetail(){
             <ShoppingCart size={20} />
             Add to Cart
           </button>
-          
+          {/* Shipment Information */}
           <p className="text-sm text-gray-500 mt-6">
             Delivery: {product.shippingInformation || 'Standard shipping available'}
           </p>
