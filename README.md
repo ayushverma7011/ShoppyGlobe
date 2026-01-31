@@ -17,10 +17,10 @@ ShoppyGlobe is a premium E-commerce platform built with the modern React ecosyst
 
 https://github.com/ayushverma7011/ShoppyGlobe
 
-# How to run the project
+##  Installation Guide
 
-1. Download the ZIP folder and open the folder in VS Code
+1. Clone the repo: `git clone <your-url>`
 
-2. We need too install the node_modules using the command npm install
+2. Install: `npm install`
 
-3. Run the project using the command npm run dev.
+3. Run: `npm run dev`
