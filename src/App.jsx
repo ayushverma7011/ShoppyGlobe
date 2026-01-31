@@ -9,7 +9,6 @@ const ProductDetail = lazy(() => import('./components/ProductDetail'));
 const Cart = lazy(() => import('./components/Cart'));
 const Checkout = lazy(() => import('./components/Checkout'));
 const NotFound = lazy(() => import('./components/NotFound'));
-
 function App() {
   return (
     <Router>
@@ -29,6 +28,7 @@ function App() {
       </main>
       <Footer />
     </Router>
+    
   );
 }
 

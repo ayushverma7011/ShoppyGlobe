@@ -4,6 +4,8 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState:{
     items: [],
+    isSearchVisible: false,
+    theme: 'light',
   },
   reducers: {
     addItem: (state, action) => {
@@ -39,9 +41,12 @@ export const cartSlice = createSlice({
     },
     resetSearch: (state) => {
       state.isSearchVisible = false;
-  },
+    },
+    toggleTheme: (state) => {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+    },
   },
 })
-export const { addItem, removeItem, updateQuantity, clearCart, toggleSearch, setSearchVisible, resetSearch } = cartSlice.actions
+export const { addItem, removeItem, updateQuantity, clearCart, toggleSearch, setSearchVisible, resetSearch, toggleTheme } = cartSlice.actions
 
 export default cartSlice.reducer

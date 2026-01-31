@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'; 
 import logo from "../assets/images/ShoppyGlobe_logo.png";
 import { IoSearchSharp } from "react-icons/io5"; 
-import { BiSolidOffer, BiHelpCircle, BiUser, BiCartAlt } from "react-icons/bi";
+import { BiUser, BiCartAlt } from "react-icons/bi";
 import { toggleSearch } from '../utils/cartSlice';
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 function Header() {
+    
     const cartItems = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
     const navigate= useNavigate();
