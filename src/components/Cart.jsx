@@ -5,7 +5,7 @@ import { Trash2, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
-  // 1. Requirement: Subscribe to the store (State Management)
+  
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ const Cart = () => {
       <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
 
       <div className="bg-white rounded-xl shadow-sm border p-6">
-        {/* 2. Requirement: Render list of cart items */}
+        {/* Rendering the list of cart items */}
         {cartItems.map((item) => (
           <div key={item.id} className="flex items-center gap-6 py-4 border-b last:border-0">
             <img src={item.thumbnail} alt={item.title} className="w-20 h-20 object-contain bg-gray-50 rounded" />
@@ -37,7 +37,7 @@ const Cart = () => {
               <p className="text-gray-500">${item.price}</p>
             </div>
 
-            {/* 3. Requirement: Event Handling (Modify Quantity) */}
+            {/* Update the qunatity of the items in cart */}
             <div className="flex items-center gap-3 border rounded-lg px-2 py-1">
               <button 
                 onClick={() => dispatch(updateQuantity({ id: item.id, quantity: Math.max(1, item.quantity - 1) }))}
@@ -58,7 +58,7 @@ const Cart = () => {
               <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
             </div>
 
-            {/* 4. Requirement: Event Handling (Remove Item) */}
+            {/* 4. Removing the Item from the cart */}
             <button 
               onClick={() => dispatch(removeItem(item.id))}
               className="text-red-500 hover:text-red-700 p-2"
