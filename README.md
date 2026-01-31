@@ -24,3 +24,13 @@ https://github.com/ayushverma7011/ShoppyGlobe
 2. Install: `npm install`
 
 3. Run: `npm run dev`
+
+##  Future Roadmap
+
+- [ ] **User Authentication:** Implement Firebase or Auth0 for user profiles.
+
+- [ ] **Payment Gateway:** Integrate Stripe for real-world transactions.
+
+- [ ] **Unit Testing:** Add Vitest or Jest for component testing (Performance 20 marks).
+
+- [ ] **Product Reviews:** Allow users to leave ratings and feedback.
