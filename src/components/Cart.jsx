@@ -4,7 +4,7 @@ import { removeItem, updateQuantity, clearCart } from '../utils/cartSlice';
 import { Trash2, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Cart = () => {
+function Cart(){
   
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
