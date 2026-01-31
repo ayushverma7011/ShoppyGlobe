@@ -54,7 +54,7 @@ function Cart(){
               </button>
             </div>
 
-            <div className="text-right min-w-[80px]">
+            <div className="text-right min-w-80px">
               <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
             </div>
 
