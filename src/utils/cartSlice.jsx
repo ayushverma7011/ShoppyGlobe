@@ -10,12 +10,18 @@ export const cartSlice = createSlice({
       const existingItem = state.items.find(item => item.id === action.payload.id);
       if (existingItem) {
     // If it exists, increment the quantity
-    existingItem.quantity += 1;
-  } else {
-    // ✅ CRITICAL: Spread the product data AND add quantity: 1
-    state.items.push({ ...action.payload, quantity: 1 });
-  }
+      existingItem.quantity += 1;
+    } else {
+      // ✅ CRITICAL: Spread the product data AND add quantity: 1
+      state.items.push({ ...action.payload, quantity: 1 });
+    }
       // console.log(action.payload);
+    },
+    toggleSearch: (state) => {
+      state.isSearchVisible = !state.isSearchVisible;
+    },
+    setSearchVisible: (state, action) => {
+      state.isSearchVisible = action.payload;
     },
     removeItem: (state) => {
       state.items.pop()
@@ -31,8 +37,11 @@ export const cartSlice = createSlice({
     clearCart: (state) => {
       state.items.length= 0
     },
+    resetSearch: (state) => {
+      state.isSearchVisible = false;
+  },
   },
 })
-export const { addItem, removeItem, updateQuantity, clearCart } = cartSlice.actions
+export const { addItem, removeItem, updateQuantity, clearCart, toggleSearch, setSearchVisible, resetSearch } = cartSlice.actions
 
 export default cartSlice.reducer

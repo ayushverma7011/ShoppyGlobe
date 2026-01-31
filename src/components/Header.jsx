@@ -1,12 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux'; 
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'; 
 import logo from "../assets/images/ShoppyGlobe_logo.png";
 import { IoSearchSharp } from "react-icons/io5"; 
 import { BiSolidOffer, BiHelpCircle, BiUser, BiCartAlt } from "react-icons/bi";
+import { toggleSearch } from '../utils/cartSlice';
 
 function Header() {
     const cartItems = useSelector((state) => state.cart.items);
+    const dispatch = useDispatch();
+    const navigate= useNavigate();
+    const handleSearchClick = (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        navigate('/'); // Go back to the product list page
+        dispatch(toggleSearch()); // Show/Hide the bar
+    };
 
     return (
         <div>
@@ -18,21 +26,15 @@ function Header() {
                         alt="Logo" />
                 </Link>
                 
-                <ul className='flex'>
-                    <div className='flex m-4 items-center'>
-                        <span className="mt-1"><IoSearchSharp /></span>
-                        <Link to="/search"><li className='px-2'>SEARCH</li></Link>
-                    </div>
-
-                    <div className='flex m-4 items-center'>
-                        <span className="mt-1"><BiSolidOffer /></span>
-                        <Link to='/offers'><li className='px-2'>OFFERS</li></Link>
-                    </div>
-
-                    <div className='flex m-4 items-center'>
-                        <span className="mt-1"><BiHelpCircle /></span> 
-                        <Link to='/help'><li className='px-2'>HELP</li></Link>
-                    </div>
+                <ul className='flex items-center space-x-6'>
+                    {/* ✅ Search Toggle Button */}
+                    <li 
+                        onClick={handleSearchClick}
+                        className='flex items-center cursor-pointer hover:text-indigo-400 transition-colors group'
+                    >
+                        <IoSearchSharp className="text-xl group-hover:scale-110 transition-transform" />
+                        <span className='px-2 font-medium'>SEARCH</span>
+                    </li>
 
                     <div className='flex m-4 items-center'>
                         <span className="mt-1"><BiUser /></span> 
