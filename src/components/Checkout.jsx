@@ -11,10 +11,9 @@ const Checkout = () => {
 
   // Calculate total one last time
   const total = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-
+    // Handle Place Order
   const handlePlaceOrder = () => {
-    // 1. Requirement: Action dispatching
-    // In a real app, you'd send this to a backend. Here, we clear the state.
+    
     dispatch(clearCart());
     navigate('/order-success');
   };
