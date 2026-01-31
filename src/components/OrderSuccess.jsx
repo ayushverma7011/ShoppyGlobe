@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, Package, ArrowRight } from 'lucide-react';
 
-const OrderSuccess = () => {
-  // Generate a random order number for a professional touch
- const [orderNumber] = React.useState(() => Math.floor(Math.random() * 900000) + 100000);
+function OrderSuccess(){
+    const [orderNumber] = React.useState(() => Math.floor(Math.random() * 900000) + 100000);
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center p-4">
@@ -14,12 +13,12 @@ const OrderSuccess = () => {
             <CheckCircle size={64} className="text-green-600" />
           </div>
         </div>
-
+        {/* Display Order Details */}
         <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Order Placed!</h1>
         <p className="text-gray-500 mb-8">
           Thank you for your purchase. Your order <span className="font-mono font-bold text-blue-600">#{orderNumber}</span> has been received and is being processed.
         </p>
-
+        {/* To show status of the order */}
         <div className="bg-gray-50 rounded-2xl p-6 mb-8 flex items-center gap-4 text-left">
           <Package className="text-blue-500" size={32} />
           <div>
@@ -27,7 +26,7 @@ const OrderSuccess = () => {
             <p className="text-gray-700 font-medium">Preparing for Shipment</p>
           </div>
         </div>
-
+        {/* Redirect to the Home Page */}
         <Link 
           to="/" 
           className="group flex items-center justify-center gap-2 w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-black transition-all"
