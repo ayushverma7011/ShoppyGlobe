@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { clearCart } from '../utils/cartSlice';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 
-const Checkout = () => {
+function  Checkout(){
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
