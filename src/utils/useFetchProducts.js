@@ -1,4 +1,5 @@
 // src/utils/useFetchProducts.js
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const useFetchProducts = () => {
@@ -10,15 +11,18 @@ const useFetchProducts = () => {
     const fetchData = async () => {
       try {
         // Requirement: Fetch from the specified API endpoint [cite: 22]
-        const response = await fetch('https://dummyjson.com/products');
-        if (!response.ok) {
-          throw new Error('Failed to fetch products'); // Requirement: Error handling [cite: 27]
-        }
-        const data = await response.json();
+        const response = await axios.get('https://dummyjson.com/products');
+       
+        // const data = await response.json();
         // The API returns an object; we need the 'products' array
-        setProducts(data.products); 
-        setError(error.message); 
-      } finally {
+        setProducts(response.data.products); 
+       
+      }
+       catch(error){
+            setError(error.message); 
+            console.log("Error fetching products:", error);
+        }
+       finally {
         setLoading(false);
       }
     };

@@ -7,7 +7,14 @@ export const cartSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-      state.items.push(action.payload)
+      const existingItem = state.items.find(item => item.id === action.payload.id);
+      if (existingItem) {
+    // If it exists, increment the quantity
+    existingItem.quantity += 1;
+  } else {
+    // ✅ CRITICAL: Spread the product data AND add quantity: 1
+    state.items.push({ ...action.payload, quantity: 1 });
+  }
       // console.log(action.payload);
     },
     removeItem: (state) => {
