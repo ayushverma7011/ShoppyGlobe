@@ -2,24 +2,23 @@ import React, { Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import useFetchProducts from '../utils/useFetchProducts'; // Double-check this folder name!
 
-// Requirement: Performance Optimization
+
 const ProductItem = lazy(() => import('./ProductItem'));
 
 const ProductList = () => {
   const { products, loading, error } = useFetchProducts();
-  
-  // Requirement: Connect to Redux Search State
-  // Make sure your store.js has a 'search' reducer!
+ 
+    // Connecting to Redux Search State
   const searchQuery = useSelector((state) => state.search?.query || "");
 
-  // Requirement: Search/Filter Logic
+   // Filtering products based on Search Query
   const filteredProducts = products.filter((product) =>
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) return <div className="text-center mt-10">Loading Products...</div>;
   
-  // Requirement: Error Handling on UI
+  // Error Handling in UI
   if (error) return <div className="text-center mt-10 text-red-500">Error: {error}</div>;
 
   return (
