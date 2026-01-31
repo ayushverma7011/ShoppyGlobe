@@ -5,16 +5,12 @@ import SkeletonCard from './SkeletonCard'; // Added back for professional feel
 
 const ProductItem = lazy(() => import('./ProductItem'));
 
-const ProductList = () => {
+function ProductList() {
   const { products, loading, error } = useFetchProducts();
   
-  // 1. Grab visibility from Redux
+  //  Grab visibility from Redux
   const isSearchVisible = useSelector((state) => state.cart.isSearchVisible);
-  
-  // 2. Local state for the input
   const [searchTerm, setSearchTerm] = useState("");
-
-  // 3. Filter using the LOCAL searchTerm
   const filteredProducts = products.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -31,7 +27,7 @@ const ProductList = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      {/* ✅ Search Bar with Professional Styling */}
+      {/* Search Bar */}
       {isSearchVisible && (
         <div className="mb-10 flex justify-center animate-fadeIn">
           <div className="relative w-full max-w-xl group">
@@ -43,7 +39,7 @@ const ProductList = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {/* Optional: Clear search button */}
+            {/* Clear search button */}
             {searchTerm && (
               <button 
                 onClick={() => setSearchTerm("")}
@@ -56,7 +52,7 @@ const ProductList = () => {
         </div>
       )}
 
-      {/* ✅ Product Grid */}
+      {/*  Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         <Suspense fallback={<SkeletonCard />}>
           {filteredProducts.length > 0 ? (
