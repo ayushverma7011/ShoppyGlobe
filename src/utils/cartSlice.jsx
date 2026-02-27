@@ -4,6 +4,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState:{
     items: [],
+    user: null,
     isSearchVisible: false,
   },
   reducers: {
@@ -27,6 +28,9 @@ export const cartSlice = createSlice({
     removeItem: (state) => {
       state.items.pop()
     },
+    setCartItems: (state, action) => {
+      state.items = action.payload;
+    },
     updateQuantity: (state, action) =>{
         const { id, quantity } = action.payload;
       const item = state.items.find(item => item.id === id);
@@ -43,6 +47,6 @@ export const cartSlice = createSlice({
     },
   },
 })
-export const { addItem, removeItem, updateQuantity, clearCart, toggleSearch, setSearchVisible, resetSearch } = cartSlice.actions
+export const { addItem, removeItem, updateQuantity, clearCart, toggleSearch, setSearchVisible, resetSearch, setCartItems } = cartSlice.actions
 
 export default cartSlice.reducer

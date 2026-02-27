@@ -1,15 +1,63 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity, clearCart } from '../utils/cartSlice';
+import { removeItem, updateQuantity, clearCart, setCartItems } from '../utils/cartSlice';
 import { Trash2, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function Cart(){
-  
+function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
 
-  // Calculate total price for the "Total" display
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  // 1. Fetch Cart from MongoDB
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:8080/api/cart", config);
+        const formattedItems = data.items.map((item) => ({
+          id: item.productId._id,      
+          title: item.productId.title, 
+          price: item.productId.price,
+          thumbnail: item.productId.thumbnail,
+          quantity: item.quantity,
+        }));
+        dispatch(setCartItems(formattedItems));
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+    if (token) fetchCart();
+  }, [dispatch, token]);
+
+  // 2. Sync Quantity with Backend (Added /api to URL)
+  const handleQuantityUpdate = async (item, newQuantity) => {
+    const quantityDifference = newQuantity - item.quantity;
+    try {
+      await axios.post("http://localhost:8080/api/cart", 
+        { productId: item.id, quantity: quantityDifference }, 
+        config
+      );
+      dispatch(updateQuantity({ id: item.id, quantity: newQuantity }));
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to update quantity");
+    }
+  };
+
+  // 3. Remove Item from Backend (NEW: Persistence Fix)
+  const handleRemoveItem = async (productId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/cart/${productId}`, config);
+      dispatch(removeItem(productId));
+    } catch (err) {
+      alert("Error removing item from database", err);
+    }
+  };
+
   const totalPrice = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
   if (cartItems.length === 0) {
@@ -27,7 +75,6 @@ function Cart(){
       <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
 
       <div className="bg-white rounded-xl shadow-sm border p-6">
-        {/* Rendering the list of cart items */}
         {cartItems.map((item) => (
           <div key={item.id} className="flex items-center gap-6 py-4 border-b last:border-0">
             <img src={item.thumbnail} alt={item.title} className="w-20 h-20 object-contain bg-gray-50 rounded" />
@@ -37,30 +84,28 @@ function Cart(){
               <p className="text-gray-500">${item.price}</p>
             </div>
 
-            {/* Update the qunatity of the items in cart */}
             <div className="flex items-center gap-3 border rounded-lg px-2 py-1">
               <button 
-                onClick={() => dispatch(updateQuantity({ id: item.id, quantity: Math.max(1, item.quantity - 1) }))}
+                onClick={() => handleQuantityUpdate(item, Math.max(1, item.quantity - 1))}
                 className="p-1 hover:bg-gray-100 rounded"
               >
                 <Minus size={16} />
               </button>
               <span className="w-8 text-center font-medium">{item.quantity}</span>
               <button 
-                onClick={() => dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }))}
+                onClick={() => handleQuantityUpdate(item, item.quantity + 1)}
                 className="p-1 hover:bg-gray-100 rounded"
               >
                 <Plus size={16} />
               </button>
             </div>
-
-            <div className="text-right min-w-80px">
+            
+            <div className="text-right min-w-20">
               <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
             </div>
 
-            {/* 4. Removing the Item from the cart */}
             <button 
-              onClick={() => dispatch(removeItem(item.id))}
+              onClick={() => handleRemoveItem(item.id)} // Updated to handle DB delete
               className="text-red-500 hover:text-red-700 p-2"
             >
               <Trash2 size={20} />
@@ -92,6 +137,6 @@ function Cart(){
       </div>
     </div>
   );
-};
+}
 
 export default Cart;
